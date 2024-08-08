@@ -23,46 +23,33 @@ public class TennisGame6 implements TennisGame {
     {
         if (player1Score == player2Score)
         {
-            String tieScore;
             switch (player1Score)
             {
                 case 0:
-                    tieScore = "Love-All";
-                    break;
+                    return "Love-All";
                 case 1:
-                    tieScore = "Fifteen-All";
-                    break;
+                    return "Fifteen-All";
                 case 2:
-                    tieScore = "Thirty-All";
-                    break;
+                    return "Thirty-All";
                 default:
-                    tieScore = "Deuce";
+                    return "Deuce";
             }
-
-            return tieScore;
         }
         else if (player1Score >= 4 || player2Score >= 4)
         {
-            // end-game score
-            String endGameScore;
-            if (player1Score - player2Score == 1) {
-                endGameScore = "Advantage " + player1Name;
-            } else if (player1Score - player2Score == -1) {
-                endGameScore = "Advantage " + player2Name;
-            } else if (player1Score - player2Score >= 2) {
-                endGameScore = "Win for " + player1Name;
-            } else {
-                endGameScore = "Win for " + player2Name;
+            switch (player1Score - player2Score){
+                case 1:
+                    return "Advantage " + player1Name;
+                case -1:
+                    return "Advantage " + player2Name;
+                default:
+                    String winningPlayer = (player1Score > player2Score) ? player1Name : player2Name;
+                    return "Win for " + winningPlayer;
             }
-
-            return endGameScore;
         }
         else
         {
-            String regularScore;
-
             String[] pointsNames = { "Love", "Fifteen", "Thirty", "Forty" };
-
             return pointsNames[player1Score] + "-" + pointsNames[player2Score];
         }
     }
