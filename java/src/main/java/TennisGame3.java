@@ -15,16 +15,16 @@ public class TennisGame3 implements TennisGame {
     }
 
     public String getScore() {
-        String s;
-        if (player1Score < 4 && player2Score < 4 && !(player1Score + player2Score == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"}; 
-            s = p[player1Score];
-            return (player1Score == player2Score) ? s + "-All" : s + "-" + p[player2Score];
+        String[] pointsNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+        if (preDeuce()) {
+            String score = pointsNames[player1Score];
+            score += (scoresLevel()) ? "-All": "-" + pointsNames[player2Score];
+            return score;
+        } else if (scoresLevel()) {
+            return "Deuce";
         } else {
-            if (player1Score == player2Score)
-                return "Deuce";
-            s = player1Score > player2Score ? player1 : player2;
-            return ((player1Score - player2Score)*(player1Score - player2Score) == 1) ? "Advantage " + s : "Win for " + s;
+            String winningPlayer = player1Score > player2Score ? player1 : player2;
+            return (scoreDifference() == 1) ? "Advantage " + winningPlayer : "Win for " + winningPlayer;
         }
     }
     
@@ -36,4 +36,16 @@ public class TennisGame3 implements TennisGame {
         
     }
 
+    private boolean preDeuce() {
+        return player1Score < 4 && player2Score < 4 && !(player1Score + player2Score == 6);
+    }
+
+    private boolean scoresLevel() {
+        return player1Score == player2Score;
+     }
+
+     private int scoreDifference() {
+        return  (player1Score - player2Score)*(player1Score - player2Score);
+    }
 }
+
