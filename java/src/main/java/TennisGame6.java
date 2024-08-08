@@ -17,16 +17,12 @@ public class TennisGame6 implements TennisGame {
             player1Score++;
         else
             player2Score++;
-
     }
 
     public String getScore()
     {
-        String result;
-
         if (player1Score == player2Score)
         {
-            // tie score
             String tieScore;
             switch (player1Score)
             {
@@ -41,16 +37,14 @@ public class TennisGame6 implements TennisGame {
                     break;
                 default:
                     tieScore = "Deuce";
-                    break;
             }
 
-            result = tieScore;
+            return tieScore;
         }
         else if (player1Score >= 4 || player2Score >= 4)
         {
             // end-game score
             String endGameScore;
-
             if (player1Score - player2Score == 1) {
                 endGameScore = "Advantage " + player1Name;
             } else if (player1Score - player2Score == -1) {
@@ -61,34 +55,15 @@ public class TennisGame6 implements TennisGame {
                 endGameScore = "Win for " + player2Name;
             }
 
-            result = endGameScore;
+            return endGameScore;
         }
         else
         {
-            // regular score
             String regularScore;
 
-            String score1 =  switch (player1Score)
-            {
-                case 0 -> "Love";
-                case 1 -> "Fifteen";
-                case 2 -> "Thirty";
-                default -> "Forty";
-            };
+            String[] pointsNames = { "Love", "Fifteen", "Thirty", "Forty" };
 
-            var score2 =  switch (player2Score)
-            {
-                case 0 -> "Love";
-                case 1 -> "Fifteen";
-                case 2 -> "Thirty";
-                default -> "Forty";
-            };
-
-            regularScore = score1 + "-" + score2;
-
-            result = regularScore;
+            return pointsNames[player1Score] + "-" + pointsNames[player2Score];
         }
-
-        return result;
     }
 }
