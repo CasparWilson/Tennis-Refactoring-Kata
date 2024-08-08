@@ -19,58 +19,34 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
         if (player1Score == player2Score)
         {
             switch (player1Score)
             {
                 case 0:
-                        score = "Love-All";
-                    break;
+                        return "Love-All";
                 case 1:
-                        score = "Fifteen-All";
-                    break;
+                        return "Fifteen-All";
                 case 2:
-                        score = "Thirty-All";
-                    break;
+                        return "Thirty-All";
                 default:
-                        score = "Deuce";
-                    break;
-                
+                        return "Deuce";
             }
         }
         else if (player1Score >=4 || player2Score >=4)
         {
-            int minusResult = player1Score - player2Score;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
-        }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = player1Score;
-                else { score+="-"; tempScore = player2Score;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
+            switch (player1Score - player2Score){
+                case 1: return "Advantage " + player1Name;
+                case -1: return "Advantage " + player2Name;
+                default:
+                    String winningPlayer = (player1Score > player2Score) ? player1Name : player2Name;
+                    return "Win for " + winningPlayer;
             }
         }
-        return score;
+        else
+        { String[] pointNames = {"Love", "Fifteen", "Thirty", "Forty"};
+            return pointNames[player1Score] + "-" + pointNames[player2Score];
+        }
+
     }
 }
