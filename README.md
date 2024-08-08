@@ -1,34 +1,49 @@
-_Support this and all my katas via [Patreon](https://www.patreon.com/EmilyBache)_
+Caspar's submission for code cleaning exercise.
 
-# Tennis Refactoring Kata
+I managed to refactor three of the six TennisGame Java classes: 3, 6 and 1.
 
-You can find out more about this exercise and where it comes from in [this YouTube video](https://youtu.be/XifUs1FhWRc). There are also some Guided Learning Hour videos that include demos of me solving parts of it.
+For ease of seeing my solutions I did not make any new classes to import - also doing
+so may have quickly made my solutions very similar, a pitfall I anyway fell into.
 
-* [Refactoring: What you need to know](https://youtu.be/K7xSsNpeM8I) - includes demo of TennisGame3 in C#
-* [Refactoring Skills: Extract Function](https://youtu.be/lOAktlPd8uk) - includes demo of TennisGame6 in C#
+Before talking about particular solutions I wanted to talk about principles in each.
 
-# The Scenario
+I renamed variables to hopefully make it clear what information they stored.
 
-Imagine you work for a consultancy company, and one of your colleagues has been doing some work for the Tennis Society. The contract is for 10 hours billable work, and your colleague has spent 8.5 hours working on it. Unfortunately he has now fallen ill. He says he has completed the work, and the tests all pass. Your boss has asked you to take over from him. She wants you to spend an hour or so on the code so she can bill the client for the full 10 hours. She instructs you to tidy up the code a little and perhaps make some notes so you can give your colleague some feedback on his chosen design. You should also prepare to talk to your boss about the value of this refactoring work, over and above the extra billable hours.
+I initialised both player scores in the games constructor. I imagine ints default to
+zero for the tests to work, but thought this was the logical choice.  Game1 had the
+Class initialise the scores rather than the constructor, and would be interested to
+learn whether there is a best practice here.
 
-There are several versions of this refactoring kata, each with their own design smells and challenges. I suggest you start with the first one, with the class "TennisGame1". The test suite provided is fairly comprehensive, and fast to run. You should not need to change the tests, only run them often as you refactor.
+rather than have a string name declared, and then initialised through a switch statement
+or an if else chain, I had each switch statement, or if-else block, return a string.
+I only added a variable if naming it added readability.  With well named variables else
+where this was not usually necessary.  Using a return in switch statements meant there
+did not need to be a break between cases which made the code more concise and readable.
 
-There is a deliberate error in several of the implementations - the player names are hard-coded to "player1" and "player2". After you refactor, you may want to fix this problem and add suitable test cases to prove your fix works.
+When comparing strings, I used .equals String method, as I believe == compares the reference
+and could fail when we would expect it not to.
 
-If you like this Kata, you may be interested in [my books](https://leanpub.com/u/emilybache) and website [SammanCoaching.org](https://sammancoaching.org)
+In all the solutions I ended up using an array of Strings with the points name,
+and then using the players score as index to get the appropriate point name.  I found
+other solutions very clumsy.
 
-## Kata Description
+It is bad practice to have these functions large if-else blocks. If I
+had my time again I would make a single switch statement -
+(tie, both player scores above 3, default) each case executing a separate function to
+handle the score in each scenario.
 
-Here is a description of the problem this code is designed to solve: [Tennis Kata](https://sammancoaching.org/kata_descriptions/tennis.html).
+I didn't take a view of whether playerScore += 1 or playerScore++ is clearer/more readable.
 
-## Questions to discuss afterwards
+I was most happy with my work on Tennis Game 3.  By refactoring three utility functions
+to control the logic, preDeuce(), scoresLevel(), scoreDifference(), really
+added readability, and given how it handled ties, scoresLevel() was even reusable.
 
-* How did it feel to work with such fast, comprehensive tests?
-* Did you make mistakes while refactoring that were caught by the tests?
-* If you used a tool to record your test runs, review it. Could you have taken smaller steps? Made fewer refactoring mistakes?
-* Did you ever make any refactoring mistakes and then back out your changes? How did it feel to throw away code?
-* What would you say to your colleague if they had written this code?
-* What would you say to your boss about the value of this refactoring work? Was there more reason to do it over and above the extra billable hour or so?
+Tennis Game six used switch statements, and I wanted to preserve that logic to show I
+could make it better, rather than redesign the program.  As noted above, I ditched the
+repetitive switch statements tt turn each player score in to a point name.
 
-## Code Reading Practice
-Test your code reading skills. Here is a description of what to do: [Scanning for Code Smells](https://sammancoaching.org/exercises/code_reading.html). There are suitable lists of urls to open in some of the language subdirectories.
+I failed to preserve the logic of Tennis 1, partially because my choice to have return
+in each if else block rather than storing a variable to return to the end blocked me
+from using an early variable in the final else, but the use of a loop there was so horrible
+anyway I wouldn't have wanted to preserve the logic.  I can't imagine it could have been
+made readable.
